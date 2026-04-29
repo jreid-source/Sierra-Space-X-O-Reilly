@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sierra Space × O'Reilly | Engineering Excellence at Orbital Speed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Barlow:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #060810;
+    --navy: #0a0e1a;
+    --navy-mid: #0d1424;
+    --navy-light: #111827;
+    --sierra-blue: #1a6bcc;
+    --sierra-blue-bright: #2280f0;
+    --oreilly-red: #d63c2e;
+    --oreilly-red-bright: #e8473a;
+    --white: #ffffff;
+    --off-white: #e8edf5;
+    --gray: #8a9ab5;
+    --gray-light: #c5cedd;
+    --accent-gold: #f0a500;
+    --border: rgba(255,255,255,0.08);
+    --border-blue: rgba(26,107,204,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(6,8,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logos { display: flex; align-items: center; gap: 1.5rem; }
+  .nav-logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .nav-logo-text .sierra { color: var(--white); }
+  .nav-logo-text .x { color: var(--gray); margin: 0 0.3rem; }
+  .nav-logo-text .oreilly { color: var(--oreilly-red); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--sierra-blue);
+    color: var(--white) !important;
+    padding: 0.5rem 1.2rem;
+    border: none !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--sierra-blue-bright) !important; color: var(--white) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 4rem 4rem;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 40%, rgba(26,107,204,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(214,60,46,0.08) 0%, transparent 50%),
+      linear-gradient(160deg, #060810 0%, #0a0e1a 50%, #060c18 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(26,107,204,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,107,204,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow-line {
+    width: 40px; height: 2px;
+    background: var(--sierra-blue);
+  }
+  .hero-eyebrow span {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--sierra-blue-bright);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 .line1 { color: var(--white); display: block; }
+  .hero h1 .line2 { color: var(--sierra-blue-bright); display: block; }
+  .hero h1 .line3 { color: var(--off-white); display: block; font-weight: 300; }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--gray-light);
+    max-width: 580px;
+    margin-bottom: 3rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-bottom: 3rem;
+  }
+  .hero-stat .num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .hero-stat .num span { color: var(--sierra-blue-bright); }
+  .hero-stat .label {
+    font-size: 0.75rem;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.3rem;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--sierra-blue);
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid var(--sierra-blue);
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--sierra-blue-bright); border-color: var(--sierra-blue-bright); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 0.9rem 2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.25);
+    transition: all 0.25s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--white); }
+
+  /* SECTION COMMON */
+  section { padding: 6rem 4rem; }
+  .section-eyebrow {
+    display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;
+  }
+  .section-eyebrow-line { width: 32px; height: 2px; background: var(--oreilly-red); }
+  .section-eyebrow span {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--oreilly-red);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-lead {
+    color: var(--gray-light);
+    font-size: 1.05rem;
+    max-width: 640px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 4rem;
+  }
+
+  /* CHALLENGE SECTION */
+  .challenge { background: var(--navy); }
+  .challenge-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 3rem;
+    border: 1px solid var(--border);
+  }
+  .challenge-card {
+    background: var(--navy-mid);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .challenge-card:hover { background: #131a2e; }
+  .challenge-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--sierra-blue);
+  }
+  .challenge-card:nth-child(2)::before { background: var(--oreilly-red); }
+  .challenge-card:nth-child(3)::before { background: var(--accent-gold); }
+  .challenge-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 4rem;
+    font-weight: 800;
+    color: rgba(255,255,255,0.05);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .challenge-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+  .challenge-card p { font-size: 0.92rem; color: var(--gray); line-height: 1.7; }
+
+  /* HOW OREILLY HELPS */
+  .how-helps { background: var(--black); }
+  .how-helps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 3.5rem;
+    align-items: start;
+  }
+  .help-pillar {
+    border-left: 3px solid var(--sierra-blue);
+    padding-left: 2rem;
+  }
+  .help-pillar:nth-child(2) { border-color: var(--oreilly-red); }
+  .help-pillar:nth-child(3) { border-color: var(--accent-gold); }
+  .help-pillar:nth-child(4) { border-color: #6eb5ff; }
+  .help-pillar h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .help-pillar .pill {
+    display: inline-block;
+    background: rgba(26,107,204,0.15);
+    border: 1px solid var(--border-blue);
+    color: var(--sierra-blue-bright);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.75rem;
+  }
+  .help-pillar p { font-size: 0.93rem; color: var(--gray); line-height: 1.7; }
+  .help-pillar ul { list-style: none; margin-top: 0.75rem; }
+  .help-pillar ul li {
+    font-size: 0.88rem;
+    color: var(--gray-light);
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .help-pillar ul li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--sierra-blue-bright);
+  }
+
+  /* PLATFORM CALLOUT */
+  .platform-callout {
+    background: linear-gradient(135deg, #0d1730 0%, #0a1220 100%);
+    border: 1px solid var(--border-blue);
+    margin: 0 4rem;
+    padding: 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+  .platform-callout h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 0.75rem;
+  }
+  .platform-callout p { color: var(--gray); font-size: 0.95rem; max-width: 560px; }
+  .platform-stats { display: flex; gap: 2.5rem; }
+  .p-stat { text-align: center; }
+  .p-stat .n {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--sierra-blue-bright);
+    display: block;
+    line-height: 1;
+  }
+  .p-stat .l {
+    font-size: 0.72rem;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  /* ROLES SECTION */
+  .roles { background: var(--navy); }
+  .roles-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: start;
+  }
+  .roles-grid { display: flex; flex-direction: column; gap: 2px; }
+  .role-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--sierra-blue);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .role-card:hover { border-color: var(--sierra-blue-bright); }
+  .role-card:nth-child(1) { border-left-color: #2280f0; }
+  .role-card:nth-child(2) { border-left-color: #d63c2e; }
+  .role-card:nth-child(3) { border-left-color: #f0a500; }
+  .role-card:nth-child(4) { border-left-color: #2ecc71; }
+  .role-card:nth-child(5) { border-left-color: #9b59b6; }
+  .role-header {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: start;
+    gap: 1rem;
+  }
+  .role-header:hover { background: rgba(255,255,255,0.02); }
+  .role-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.35rem;
+  }
+  .role-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--white);
+  }
+  .role-toggle {
+    width: 24px; height: 24px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: var(--gray);
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .role-card.open .role-toggle { background: var(--sierra-blue); color: var(--white); border-color: var(--sierra-blue); }
+  .role-body {
+    display: none;
+    padding: 0 2rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .role-card.open .role-body { display: block; }
+  .role-body-inner { padding-top: 1.5rem; }
+  .role-section-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--sierra-blue-bright);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .role-deliverables { list-style: none; margin-bottom: 1.5rem; }
+  .role-deliverables li {
+    font-size: 0.88rem;
+    color: var(--gray-light);
+    padding: 0.3rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .role-deliverables li::before { content: '▸'; position: absolute; left: 0; color: var(--gray); }
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+  .tech-tag {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--gray-light);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.25rem 0.6rem;
+    letter-spacing: 0.05em;
+  }
+  .oreilly-help-box {
+    background: rgba(26,107,204,0.08);
+    border: 1px solid rgba(26,107,204,0.2);
+    padding: 1.25rem 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .oreilly-help-box .oh-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--oreilly-red);
+    margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .oreilly-help-box p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+  /* ANSWERS / AI FEATURE */
+  .ai-feature {
+    background: var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-feature-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(214,60,46,0.07) 0%, transparent 60%);
+  }
+  .ai-feature-content { position: relative; z-index: 2; }
+  .ai-feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-top: 3.5rem;
+    align-items: center;
+  }
+  .ai-feature-visual {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--gray);
+    line-height: 1.8;
+  }
+  .ai-feature-visual .query-line { color: var(--sierra-blue-bright); }
+  .ai-feature-visual .answer-line { color: var(--off-white); }
+  .ai-feature-visual .source-line { color: var(--accent-gold); }
+  .ai-feature-visual .prompt-label {
+    display: block; margin-bottom: 0.75rem;
+    color: var(--oreilly-red);
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .ai-features-list { list-style: none; margin-top: 2rem; }
+  .ai-features-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 1rem; align-items: start;
+  }
+  .ai-features-list li:last-child { border-bottom: none; }
+  .feat-icon {
+    width: 36px; height: 36px;
+    background: rgba(26,107,204,0.15);
+    border: 1px solid var(--border-blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .feat-text h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--white);
+    margin-bottom: 0.25rem;
+  }
+  .feat-text p { font-size: 0.87rem; color: var(--gray); line-height: 1.6; }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--navy);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(26,107,204,0.2) 0%, transparent 60%);
+  }
+  .cta-section-content { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+  .cta-section h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+  .cta-section h2 span { color: var(--sierra-blue-bright); }
+  .cta-section p {
+    color: var(--gray-light);
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+  .cta-section .cta-contacts {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    text-align: left;
+  }
+  .contact-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+  }
+  .contact-card .contact-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gray);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .contact-card .contact-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .contact-card .contact-title { font-size: 0.82rem; color: var(--gray); margin-bottom: 0.5rem; }
+  .contact-card .contact-email { font-size: 0.85rem; color: var(--sierra-blue-bright); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer .footer-left {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  footer .footer-right { font-size: 0.78rem; color: var(--gray); }
+  footer .footer-right a { color: var(--sierra-blue-bright); text-decoration: none; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-content > * { animation: fadeUp 0.7s ease both; }
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero h1 { animation-delay: 0.2s; }
+  .hero-sub { animation-delay: 0.35s; }
+  .hero-stats { animation-delay: 0.5s; }
+  .hero-ctas { animation-delay: 0.65s; }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .live-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: #2ecc71;
+    border-radius: 50%;
+    animation: pulse-dot 2s ease infinite;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .divider { margin: 0 1.5rem; }
+    .platform-callout { margin: 0 1.5rem; flex-direction: column; grid-template-columns: 1fr; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .challenge-grid { grid-template-columns: 1fr; }
+    .how-helps-grid { grid-template-columns: 1fr; }
+    .ai-feature-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .roles-intro { grid-template-columns: 1fr; gap: 2rem; }
+    .cta-section .cta-contacts { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logos">
+    <div class="nav-logo-text">
+      <span class="sierra">Sierra Space</span>
+      <span class="x">×</span>
+      <span class="oreilly">O'Reilly</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#challenges">Talent Challenges</a>
+    <a href="#platform">Platform</a>
+    <a href="#roles">Priority Roles</a>
+    <a href="#mcp">MCP Integration</a>
+    <a href="#contact" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span><span class="live-dot"></span>Orbital Economy · Talent Strategy · 2026</span>
+    </div>
+    <h1>
+      <span class="line1">Engineering</span>
+      <span class="line2">At Orbital</span>
+      <span class="line3">Speed.</span>
+    </h1>
+    <p class="hero-sub">Sierra Space is building the infrastructure of the Orbital Economy — from Dream Chaser to LIFE™ Habitat. O'Reilly ensures every engineer is mission-ready from day one.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">950<span>+</span></div><div class="label">Interactive Labs</div></div>
+      <div class="hero-stat"><div class="num">2K<span>+</span></div><div class="label">Live Events / Year</div></div>
+      <div class="hero-stat"><div class="num">900<span>+</span></div><div class="label">Cert Prep Guides</div></div>
+      <div class="hero-stat"><div class="num">97<span>K+</span></div><div class="label">Learning Assets</div></div>
+    </div>
+    <div class="hero-ctas">
+      <a href="#roles" class="btn-primary">View Priority Roles</a>
+      <a href="#platform" class="btn-outline">Explore the Platform</a>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGE SECTION -->
+<section class="challenge" id="challenges">
+  <div class="section-eyebrow">
+    <div class="section-eyebrow-line"></div>
+    <span>The Talent Imperative</span>
+  </div>
+  <h2 class="section-title">Three Forces Shaping<br>Sierra Space's 2026 Workforce</h2>
+  <p class="section-lead">Building a commercial space station and a reusable spaceplane simultaneously demands a talent strategy that keeps pace with the mission.</p>
+  <div class="challenge-grid">
+    <div class="challenge-card">
+      <div class="challenge-num">01</div>
+      <h3>Accelerate Time to Productivity</h3>
+      <p>New hires joining Dream Chaser and LIFE™ programs need to contribute fast. Onboarding engineers into complex, flight-critical systems—MBSE, GNC, embedded firmware—requires structured, curated learning paths that match your internal tooling and workflows.</p>
+    </div>
+    <div class="challenge-card">
+      <div class="challenge-num">02</div>
+      <h3>Upskill & Retain Top Talent</h3>
+      <p>The orbital economy is intensely competitive. Retaining engineers means investing in their growth — from embedded C to AI/ML, from SysML to cloud DevSecOps. Engineers who learn continuously stay longer and deliver more mission impact.</p>
+    </div>
+    <div class="challenge-card">
+      <div class="challenge-num">03</div>
+      <h3>Project Readiness Briefs</h3>
+      <p>When talent is re-assigned to a new program — say, from satellite subsystems to Orbital Reef habitability systems — they need rapid, curated intelligence on a new domain. O'Reilly's AI-powered answers and expert playlists make that transition mission-critical, not mission-risky.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- HOW OREILLY HELPS -->
+<section class="how-helps" id="platform">
+  <div class="section-eyebrow">
+    <div class="section-eyebrow-line"></div>
+    <span>O'Reilly Platform</span>
+  </div>
+  <h2 class="section-title">How O'Reilly Powers<br>Sierra Space Engineers</h2>
+  <p class="section-lead">97,000+ expert-curated assets. Live events. Interactive sandboxes. AI-sourced answers. Built for engineers who can't afford to be wrong.</p>
+  <div class="how-helps-grid">
+    <div class="help-pillar">
+      <h3>Accelerate Onboarding</h3>
+      <div class="pill">Time to Productivity</div>
+      <p>Create curated playlists for each role — Flight Software, Systems Engineer, Embedded — so new hires get the exact chapters, videos, and labs relevant to their stack on day one. No noise, no wasted time.</p>
+      <ul>
+        <li>Role-specific playlists (shared by Kyle or Jon as admin)</li>
+        <li>Point to specific chapters, not whole books</li>
+        <li>Offline mobile access for engineers in restricted facilities</li>
+        <li>Track progress and completion across the team</li>
+      </ul>
+    </div>
+    <div class="help-pillar">
+      <h3>Upskill & Retain Talent</h3>
+      <div class="pill">Continuous Growth</div>
+      <p>Verifiable Skills assessments benchmark engineers against expert-defined frameworks — not against each other. Engineers at Sierra Space see exactly where they stand in Software Architecture, Python, DevOps, and more, then follow a curated path to advance through 5 skill levels.</p>
+      <ul>
+        <li>7 Verifiable Skills today, scaling to 50 by end of 2026</li>
+        <li>Framework built by O'Reilly's expert author community</li>
+        <li>Earn shareable, verifiable digital badges</li>
+        <li>Live events: 2,000+ per year, all recordings included</li>
+      </ul>
+    </div>
+    <div class="help-pillar">
+      <h3>Project Readiness Briefs</h3>
+      <div class="pill">Cross-Program Mobility</div>
+      <p>When an engineer moves from propulsion firmware to Orbital Reef life support, they need a fast briefing on a new domain. Admins can build and share a "Project Readiness" playlist — granular, curated, and ready in minutes. Jon already did this for MBSE and systems engineering best practices.</p>
+      <ul>
+        <li>Build playlists for Dream Chaser, LIFE™, Orbital Reef programs</li>
+        <li>Share across the Sierra Space org instantly</li>
+        <li>AI search surfaces the most relevant content immediately</li>
+        <li>Sandboxes let engineers practice in a safe environment</li>
+      </ul>
+    </div>
+    <div class="help-pillar">
+      <h3>AI-Powered Answers</h3>
+      <div class="pill">On-Demand Intelligence</div>
+      <p>40% of platform usage is engineers asking specific technical questions — not browsing. O'Reilly Answers returns AI-generated responses sourced directly from O'Reilly books and expert content, not the open web. Every answer is cited and verifiable.</p>
+      <ul>
+        <li>Ask: "How do I implement a timeout in a Go routine for telemetry?"</li>
+        <li>Get an answer sourced from peer-reviewed O'Reilly content</li>
+        <li>Launch an interactive sandbox alongside the answer</li>
+        <li>Copy, annotate, and share answers with your team</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM CALLOUT BAR -->
+<div class="platform-callout">
+  <div>
+    <h3>Every O'Reilly Book. Every Lab. Every Live Event.</h3>
+    <p>Every O'Reilly title ever published lives in the platform — plus books from 200+ other publishers, books not yet published, thousands of hours of video, and 950+ interactive labs and sandboxes. All included in the Sierra Space subscription.</p>
+  </div>
+  <div class="platform-stats">
+    <div class="p-stat"><span class="n">200+</span><span class="l">Publishers</span></div>
+    <div class="p-stat"><span class="n">950+</span><span class="l">Labs</span></div>
+    <div class="p-stat"><span class="n">900+</span><span class="l">Cert Paths</span></div>
+  </div>
+</div>
+
+<!-- ROLES -->
+<section class="roles" id="roles">
+  <div class="roles-intro">
+    <div>
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line"></div>
+        <span>Priority Hiring · 2026</span>
+      </div>
+      <h2 class="section-title">Five Critical Roles<br>Powering the Mission</h2>
+      <p class="section-lead">Sierra Space's 2026 hiring strategy is concentrated on high-reliability software and autonomous systems across Dream Chaser, LIFE™ Habitat, and Orbital Reef programs.</p>
+    </div>
+    <div style="padding-top: 1rem;">
+      <div style="background: rgba(26,107,204,0.08); border: 1px solid rgba(26,107,204,0.2); padding: 1.5rem;">
+        <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--sierra-blue-bright); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem;">O'Reilly Advantage</div>
+        <p style="font-size: 0.88rem; color: var(--gray); line-height: 1.7;">Each role card below includes the specific O'Reilly content types and platform features that accelerate ramp-up for that discipline — from flight software to cloud infrastructure.</p>
+        <p style="font-size: 0.82rem; color: var(--gray); margin-top: 0.75rem; line-height: 1.6;">Click any role to expand deliverables, tech stack, and how O'Reilly supports that function.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="roles-grid">
+
+    <!-- Role 1 -->
+    <div class="role-card open">
+      <div class="role-header" onclick="toggleRole(this)">
+        <div>
+          <div class="role-num">ROLE 01 · FLIGHT AVIONICS</div>
+          <div class="role-title">Flight Software Engineer (GNC/Avionics)</div>
+        </div>
+        <div class="role-toggle">−</div>
+      </div>
+      <div class="role-body">
+        <div class="role-body-inner">
+          <span class="role-section-label">Key Deliverables</span>
+          <ul class="role-deliverables">
+            <li>Real-time flight control algorithms for Dream Chaser autonomous operations</li>
+            <li>Autonomous docking and re-entry sequences for orbital missions</li>
+            <li>Flight-critical software meeting DO-178C safety certification standards</li>
+          </ul>
+          <span class="role-section-label">Tech Stack</span>
+          <div class="tech-stack">
+            <span class="tech-tag">C/C++</span>
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Simulink/MATLAB</span>
+            <span class="tech-tag">RTOS (VxWorks)</span>
+            <span class="tech-tag">Green Hills</span>
+            <span class="tech-tag">HITL Testing</span>
+          </div>
+          <div class="oreilly-help-box">
+            <div class="oh-label">📚 O'Reilly Accelerates This Role</div>
+            <p>Deep C++ library, RTOS architecture books, and DO-178C certification guides. Interactive sandboxes let new engineers write real-time C code without touching flight hardware. Live events on embedded safety standards. Build a "Flight Software Onboarding" playlist pointing directly to the chapters on VxWorks and HITL frameworks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role 2 -->
+    <div class="role-card">
+      <div class="role-header" onclick="toggleRole(this)">
+        <div>
+          <div class="role-num">ROLE 02 · INTEGRATION & TEST</div>
+          <div class="role-title">Space Systems Engineer (Integration & Test)</div>
+        </div>
+        <div class="role-toggle">+</div>
+      </div>
+      <div class="role-body">
+        <div class="role-body-inner">
+          <span class="role-section-label">Key Deliverables</span>
+          <ul class="role-deliverables">
+            <li>Comprehensive system architectures for LIFE™ Habitat subsystem integration</li>
+            <li>Verification and Validation (V&V) plans across power, life support, and propulsion</li>
+            <li>Digital twins used to simulate life-support failure modes</li>
+          </ul>
+          <span class="role-section-label">Tech Stack</span>
+          <div class="tech-stack">
+            <span class="tech-tag">SysML (MagicDraw/Cameo)</span>
+            <span class="tech-tag">Doors Next Gen</span>
+            <span class="tech-tag">JIRA/Confluence</span>
+            <span class="tech-tag">MBSE</span>
+          </div>
+          <div class="oreilly-help-box">
+            <div class="oh-label">📚 O'Reilly Accelerates This Role</div>
+            <p>Jon's MBSE playlist — already built and shared across the Sierra Space org — is exactly this workflow. O'Reilly's expert-curated content on Model-Based Systems Engineering and SysML enables engineers moving into LIFE™ integration to get up to speed without weeks of internal documentation hunting. AI-powered Answers can field rapid V&V methodology questions with cited, authoritative responses.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role 3 -->
+    <div class="role-card">
+      <div class="role-header" onclick="toggleRole(this)">
+        <div>
+          <div class="role-num">ROLE 03 · AI & AUTONOMY</div>
+          <div class="role-title">Autonomous Systems & AI Engineer</div>
+        </div>
+        <div class="role-toggle">+</div>
+      </div>
+      <div class="role-body">
+        <div class="role-body-inner">
+          <span class="role-section-label">Key Deliverables</span>
+          <ul class="role-deliverables">
+            <li>Computer vision models for robotic arm manipulation on Orbital Reef</li>
+            <li>Predictive maintenance algorithms for LIFE™ habitat hardware</li>
+            <li>AI-driven telemetry monitoring systems for autonomous space station ops</li>
+          </ul>
+          <span class="role-section-label">Tech Stack</span>
+          <div class="tech-stack">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">TensorFlow</span>
+            <span class="tech-tag">PyTorch</span>
+            <span class="tech-tag">OpenCV</span>
+            <span class="tech-tag">C++</span>
+            <span class="tech-tag">ROS</span>
+          </div>
+          <div class="oreilly-help-box">
+            <div class="oh-label">📚 O'Reilly Accelerates This Role</div>
+            <p>O'Reilly's AI/ML library is among the most comprehensive available — spanning PyTorch, TensorFlow, computer vision, and ROS. The Verifiable Skills framework for Python and software architecture benchmarks engineers against expert-defined competencies, showing exactly which of the 43 competencies an AI engineer needs to develop for mission-grade autonomous systems.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role 4 -->
+    <div class="role-card">
+      <div class="role-header" onclick="toggleRole(this)">
+        <div>
+          <div class="role-num">ROLE 04 · EMBEDDED SYSTEMS</div>
+          <div class="role-title">Embedded Software Engineer (Propulsion & Power)</div>
+        </div>
+        <div class="role-toggle">+</div>
+      </div>
+      <div class="role-body">
+        <div class="role-body-inner">
+          <span class="role-section-label">Key Deliverables</span>
+          <ul class="role-deliverables">
+            <li>Low-level drivers for sensors and actuators in propulsion systems</li>
+            <li>Battery state-of-charge algorithms for orbital power management</li>
+            <li>Propulsion control logic for orbital maneuvering sequences</li>
+          </ul>
+          <span class="role-section-label">Tech Stack</span>
+          <div class="tech-stack">
+            <span class="tech-tag">Embedded C</span>
+            <span class="tech-tag">Assembly</span>
+            <span class="tech-tag">FPGA/VHDL</span>
+            <span class="tech-tag">ARM/RISC-V</span>
+            <span class="tech-tag">SPI/I2C/CAN Bus</span>
+          </div>
+          <div class="oreilly-help-box">
+            <div class="oh-label">📚 O'Reilly Accelerates This Role</div>
+            <p>Embedded C, FPGA design, and microcontroller architecture are core O'Reilly domains. Interactive labs allow engineers to work with simulated hardware interfaces before touching real propulsion or power hardware. Build a project readiness playlist for engineers transitioning from satellite work to propulsion & power — pointed at specific FPGA chapters, CAN bus protocol guides, and ARM architecture references.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role 5 -->
+    <div class="role-card">
+      <div class="role-header" onclick="toggleRole(this)">
+        <div>
+          <div class="role-num">ROLE 05 · GROUND SEGMENT</div>
+          <div class="role-title">Cloud / DevSecOps Engineer (Ground Segment)</div>
+        </div>
+        <div class="role-toggle">+</div>
+      </div>
+      <div class="role-body">
+        <div class="role-body-inner">
+          <span class="role-section-label">Key Deliverables</span>
+          <ul class="role-deliverables">
+            <li>Secure cloud-native data pipelines for satellite telemetry on AWS GovCloud</li>
+            <li>Automated software deployment pipelines for ground station operations</li>
+            <li>High-availability storage architecture for mission-critical data</li>
+          </ul>
+          <span class="role-section-label">Tech Stack</span>
+          <div class="tech-stack">
+            <span class="tech-tag">AWS GovCloud</span>
+            <span class="tech-tag">Kubernetes</span>
+            <span class="tech-tag">Docker</span>
+            <span class="tech-tag">Terraform</span>
+            <span class="tech-tag">Ansible</span>
+            <span class="tech-tag">GitLab CI/CD</span>
+          </div>
+          <div class="oreilly-help-box">
+            <div class="oh-label">📚 O'Reilly Accelerates This Role</div>
+            <p>O'Reilly's cloud and DevSecOps catalog spans Kubernetes, Docker, Terraform, and AWS in depth — including content on GovCloud compliance patterns. AWS certification prep paths are already curated in the platform (900+ cert guides). New ground segment engineers can launch a Kubernetes sandbox on day one and interact with the infrastructure they'll be deploying before they've written a single line of production code.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- AI ANSWERS FEATURE -->
+<section class="ai-feature">
+  <div class="ai-feature-bg"></div>
+  <div class="ai-feature-content">
+    <div class="section-eyebrow">
+      <div class="section-eyebrow-line"></div>
+      <span>O'Reilly Answers</span>
+    </div>
+    <h2 class="section-title">Expert Knowledge.<br>Instantly. Cited.</h2>
+    <div class="ai-feature-grid">
+      <div>
+        <p class="section-lead" style="margin-bottom:0;">40% of O'Reilly usage is engineers asking questions — not browsing courses. Unlike ChatGPT or Gemini, every O'Reilly answer is sourced from verified expert content. Your engineers get the same quality as a peer-reviewed book, in seconds.</p>
+        <ul class="ai-features-list">
+          <li>
+            <div class="feat-icon">🔍</div>
+            <div class="feat-text">
+              <h4>AI Search Mode</h4>
+              <p>Ask in natural language. O'Reilly surfaces the most relevant content from 97,000+ assets — books, videos, labs — published as recently as this week.</p>
+            </div>
+          </li>
+          <li>
+            <div class="feat-icon">📎</div>
+            <div class="feat-text">
+              <h4>Sourced & Citable</h4>
+              <p>Every answer shows you exactly which O'Reilly book, chapter, or expert authored it. No hallucinations. No uncertainty. Just traceable, authoritative responses.</p>
+            </div>
+          </li>
+          <li>
+            <div class="feat-icon">⚗️</div>
+            <div class="feat-text">
+              <h4>Launch a Sandbox Alongside</h4>
+              <p>Got your answer? Now test it. Launch a Python, Go, or embedded C sandbox directly alongside the answer without leaving the platform.</p>
+            </div>
+          </li>
+          <li>
+            <div class="feat-icon">🔗</div>
+            <div class="feat-text">
+              <h4>Share Across the Org</h4>
+              <p>Copy, annotate, and share answers with your team. Build institutional knowledge, not just individual knowledge.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="ai-feature-visual">
+          <span class="prompt-label">// O'Reilly Answers — Live Demo Query</span>
+          <span class="query-line">❯ How do I implement a hardware-in-the-loop</span>
+          <span class="query-line">  (HITL) test harness for a VxWorks RTOS</span>
+          <span class="query-line">  GNC controller?</span>
+          <br>
+          <span class="answer-line">━━ Answer ━━━━━━━━━━━━━━━━━━━━━━━━━━</span>
+          <br>
+          <span class="answer-line">A HITL test harness for VxWorks GNC</span>
+          <span class="answer-line">requires: (1) a real-time simulation</span>
+          <span class="answer-line">host running at ≥1kHz loop rate,</span>
+          <span class="answer-line">(2) deterministic I/O bridging via</span>
+          <span class="answer-line">shared memory or reflective memory...</span>
+          <br>
+          <span class="source-line">━━ Sources ━━━━━━━━━━━━━━━━━━━━━━━</span>
+          <br>
+          <span class="source-line">[1] Real-Time Embedded Systems, Ch. 8</span>
+          <span class="source-line">    O'Reilly Media — verified expert</span>
+          <span class="source-line">[2] VxWorks Programmer's Guide, §4.2</span>
+          <span class="source-line">    Wind River / O'Reilly catalog</span>
+          <br>
+          <span style="color: #2ecc71;">▸ Launch RTOS sandbox →</span>
+        </div>
+        <div style="margin-top: 1rem; padding: 1rem; background: rgba(214,60,46,0.08); border: 1px solid rgba(214,60,46,0.2); font-size: 0.82rem; color: var(--gray); font-style: italic; line-height: 1.6;">
+          "I don't know what I'm going to get back from ChatGPT. Maybe I can trust it to 85%, but it may or may not be sourced. You can do the same thing within O'Reilly — and it will always tell you exactly where the answer came from."
+          <span style="display:block; margin-top:0.5rem; color: var(--gray-light); font-style: normal; font-family: 'Barlow Condensed', sans-serif; text-transform: uppercase; letter-spacing: 0.05em;">— Jason Reid, O'Reilly Enterprise AE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MCP INTEGRATION SECTION -->
+<section id="mcp" style="background: var(--black); padding: 6rem 4rem; position: relative; overflow: hidden;">
+  <div style="position:absolute; inset:0; background: radial-gradient(ellipse at 30% 60%, rgba(26,107,204,0.1) 0%, transparent 55%), radial-gradient(ellipse at 80% 20%, rgba(240,165,0,0.05) 0%, transparent 50%);"></div>
+  <div style="position:relative; z-index:2;">
+    <div class="section-eyebrow">
+      <div class="section-eyebrow-line" style="background: var(--accent-gold);"></div>
+      <span style="color: var(--accent-gold);">MCP Integration · New Capability</span>
+    </div>
+    <h2 class="section-title">O'Reilly Knowledge<br>Inside the Tools<br><span style="color:var(--sierra-blue-bright);">You Already Use.</span></h2>
+    <p class="section-lead" style="max-width:680px; margin-bottom:3.5rem;">Through O'Reilly's Model Context Protocol (MCP) integration, Sierra Space engineers don't have to leave their workflow to access expert knowledge. O'Reilly's 97,000+ curated assets surface directly inside the IDEs, chat tools, and AI assistants your teams already rely on every day.</p>
+
+    <div style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap:4rem; align-items:start;">
+      <div>
+        <div style="background: var(--navy-mid); border:1px solid var(--border); border-top: 3px solid var(--accent-gold); padding:2rem; margin-bottom:2px;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:1.25rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--white); margin-bottom:0.75rem;">What Is MCP?</div>
+          <p style="font-size:0.92rem; color:var(--gray); line-height:1.7;">Model Context Protocol (MCP) is an open standard that lets AI assistants and developer tools query external knowledge sources in real time. O'Reilly's MCP server makes the entire O'Reilly learning catalog available as a live knowledge layer — callable from any MCP-compatible tool, with no separate login or context switch required.</p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:2px;">
+          <div style="background:var(--navy-mid); border:1px solid var(--border); padding:1.5rem;">
+            <div style="font-size:1.5rem; margin-bottom:0.5rem;">💻</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--white); margin-bottom:0.4rem;">VS Code / Cursor</div>
+            <p style="font-size:0.83rem; color:var(--gray); line-height:1.6;">A Flight Software engineer writing RTOS interrupt handlers asks their AI coding assistant a question — O'Reilly returns sourced, authoritative answers from embedded systems books without leaving the editor.</p>
+          </div>
+          <div style="background:var(--navy-mid); border:1px solid var(--border); padding:1.5rem;">
+            <div style="font-size:1.5rem; margin-bottom:0.5rem;">🤖</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--white); margin-bottom:0.4rem;">Claude / Copilot</div>
+            <p style="font-size:0.83rem; color:var(--gray); line-height:1.6;">Systems engineers querying Claude or GitHub Copilot get responses grounded in O'Reilly's MBSE, SysML, and V&V content — not the open web. Expert knowledge, cited, delivered in context.</p>
+          </div>
+          <div style="background:var(--navy-mid); border:1px solid var(--border); padding:1.5rem;">
+            <div style="font-size:1.5rem; margin-bottom:0.5rem;">🔧</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--white); margin-bottom:0.4rem;">Slack / Teams</div>
+            <p style="font-size:0.83rem; color:var(--gray); line-height:1.6;">DevSecOps teams troubleshooting Kubernetes or Terraform configurations get O'Reilly references surfaced right inside their team channels — no browser tab required.</p>
+          </div>
+          <div style="background:var(--navy-mid); border:1px solid var(--border); padding:1.5rem;">
+            <div style="font-size:1.5rem; margin-bottom:0.5rem;">🛰️</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--white); margin-bottom:0.4rem;">Custom Tooling</div>
+            <p style="font-size:0.83rem; color:var(--gray); line-height:1.6;">Sierra Space's internal engineering portals can integrate the MCP server to surface O'Reilly content alongside JIRA tickets, simulation dashboards, or internal documentation — wherever engineers already work.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="background:var(--navy-mid); border:1px solid var(--border); padding:2rem; font-family:'Share Tech Mono',monospace; font-size:0.76rem; color:var(--gray); line-height:1.9; margin-bottom:1.5rem;">
+          <span style="display:block; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-gold); margin-bottom:0.75rem;">// MCP Flow — Sierra Space Engineer in VS Code</span>
+          <span style="color:var(--gray-light);">engineer@dream-chaser:~$ </span><span style="color:var(--sierra-blue-bright);">ask</span><br>
+          <span style="color:var(--off-white);">"What's the safest way to implement</span><br>
+          <span style="color:var(--off-white);"> watchdog timers on VxWorks for</span><br>
+          <span style="color:var(--off-white);"> flight-critical interrupt handling?"</span>
+          <br><br>
+          <span style="color:var(--gray);">── MCP: querying O'Reilly catalog ──</span><br>
+          <span style="color:var(--gray);">   ↳ 97,000+ assets indexed</span><br>
+          <span style="color:var(--gray);">   ↳ matching: RTOS, VxWorks, DO-178C</span><br>
+          <span style="color:var(--gray);">   ↳ top match: Real-Time Embedded Systems</span>
+          <br><br>
+          <span style="color:var(--off-white);">Watchdog timers in VxWorks should be</span><br>
+          <span style="color:var(--off-white);">configured at the BSP level with...</span>
+          <br><br>
+          <span style="color:var(--accent-gold);">📖 Source: Real-Time Embedded Systems,</span><br>
+          <span style="color:var(--accent-gold);">   Ch. 11 — O'Reilly (verified expert)</span><br>
+          <span style="color:var(--accent-gold);">📖 Source: VxWorks BSP Guide, §3.4</span>
+        </div>
+
+        <div style="background:rgba(240,165,0,0.07); border:1px solid rgba(240,165,0,0.2); padding:1.5rem;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.85rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-gold); margin-bottom:1rem;">Why This Matters for Sierra Space</div>
+          <ul style="list-style:none;">
+            <li style="font-size:0.87rem; color:var(--gray-light); padding:0.4rem 0; padding-left:1.2rem; position:relative; border-bottom:1px solid rgba(255,255,255,0.05);"><span style="position:absolute; left:0; color:var(--accent-gold);">→</span>Zero context-switching — knowledge comes to the engineer, not the other way around</li>
+            <li style="font-size:0.87rem; color:var(--gray-light); padding:0.4rem 0; padding-left:1.2rem; position:relative; border-bottom:1px solid rgba(255,255,255,0.05);"><span style="position:absolute; left:0; color:var(--accent-gold);">→</span>Answers sourced from O'Reilly's expert catalog, not the open web — always cited and verifiable</li>
+            <li style="font-size:0.87rem; color:var(--gray-light); padding:0.4rem 0; padding-left:1.2rem; position:relative; border-bottom:1px solid rgba(255,255,255,0.05);"><span style="position:absolute; left:0; color:var(--accent-gold);">→</span>Works inside tools your teams already have security-cleared and deployed</li>
+            <li style="font-size:0.87rem; color:var(--gray-light); padding:0.4rem 0; padding-left:1.2rem; position:relative;"><span style="position:absolute; left:0; color:var(--accent-gold);">→</span>Scales expert learning across Dream Chaser, LIFE™, and Orbital Reef programs simultaneously</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-section-content">
+    <div class="section-eyebrow" style="justify-content:center; margin-bottom:1.5rem;">
+      <div class="section-eyebrow-line"></div>
+      <span>Next Steps</span>
+    </div>
+    <h2>Ready to Launch<br><span>Your Team's Potential?</span></h2>
+    <p>Sierra Space is already in trial with O'Reilly. The platform is live. Your engineers are exploring. Now is the time to configure role-specific playlists, activate Verifiable Skills assessments, and build your first Project Readiness Brief.</p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="mailto:jason.reid@oreilly.com" class="btn-primary">Contact Jason Reid</a>
+      <a href="https://learning.oreilly.com" target="_blank" class="btn-outline">Access the Platform</a>
+    </div>
+    <div class="cta-contacts">
+      <div class="contact-card">
+        <div class="contact-label">O'Reilly · Enterprise Account Executive</div>
+        <div class="contact-name">Jason Reid</div>
+        <div class="contact-title">Enterprise Account Executive — O'Reilly Media</div>
+        <div class="contact-email">jason.reid@oreilly.com</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-label">O'Reilly · Getting Started</div>
+        <div class="contact-name">Access the Platform</div>
+        <div class="contact-title">Your Sierra Space trial is active — log in now to explore 97K+ assets, build your first playlist, and run an Answers query.</div>
+        <a href="https://learning.oreilly.com" target="_blank" style="display:inline-block; margin-top:0.75rem; font-family:'Barlow Condensed',sans-serif; font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--sierra-blue-bright); text-decoration:none;">learning.oreilly.com →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">Sierra Space × O'Reilly · Confidential Partnership Brief · 2026</div>
+  <div class="footer-right">
+    <a href="https://www.sierraspace.com" target="_blank">sierraspace.com</a> &nbsp;·&nbsp;
+    <a href="https://learning.oreilly.com" target="_blank">learning.oreilly.com</a>
+  </div>
+</footer>
+
+<script>
+  function toggleRole(header) {
+    const card = header.parentElement;
+    const toggle = header.querySelector('.role-toggle');
+    const isOpen = card.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.role-card').forEach(c => {
+      c.classList.remove('open');
+      c.querySelector('.role-toggle').textContent = '+';
+    });
+    if (!isOpen) {
+      card.classList.add('open');
+      toggle.textContent = '−';
+    }
+  }
+</script>
+
+</body>
+</html>
