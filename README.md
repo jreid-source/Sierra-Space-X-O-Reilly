@@ -1,6 +1,6 @@
 # Sierra Space × O'Reilly — Partner Microsite
 
-A branded microsite presenting the O'Reilly learning platform partnership to Sierra Space, covering talent strategy, platform capabilities, MCP integration, and 2026 priority hiring roles.
+A branded microsite presenting the O'Reilly learning platform partnership to Sierra Space, covering talent strategy, platform capabilities, MCP integration, pricing, and 2026 priority hiring roles — with an animated satellite background.
 
 ## 🚀 Live Site
 
@@ -28,33 +28,31 @@ https://<your-github-username>.github.io/<your-repo-name>/
 
 > No build step, no framework, no dependencies required. The site is fully self-contained and loads all fonts from Google Fonts via CDN.
 
-## ✏️ Making Edits
+## ✏️ Page Sections
 
-All content, styles, and layout live in `index.html`. Key sections and their approximate line locations:
+| Section | ID | What It Contains |
+|---------|-----|-----------------|
+| Hero | — | Headline, platform stats, CTAs |
+| Talent Challenges | `#challenges` | Three 2026 workforce imperatives |
+| Platform | `#platform` | Four O'Reilly capability pillars |
+| Priority Roles | `#roles` | Five 2026 hiring roles (accordion) |
+| Learning Plan | `#learning-plan` | Interactive playlist — Flight Software Engineer |
+| O'Reilly Answers | — | AI-sourced answers feature |
+| MCP Integration | `#mcp` | O'Reilly knowledge inside existing tools |
+| Pricing | `#pricing` | Three tiers: Starter, Growth, Scale |
+| Ready to Launch | `#contact` | CTA + Jason Reid contact |
 
-| Section | What It Contains |
-|--------|-----------------|
-| `<!-- NAV -->` | Navigation bar with links |
-| `<!-- HERO -->` | Headline, stats, CTAs |
-| `<!-- CHALLENGE SECTION -->` | Three talent imperatives |
-| `<!-- HOW OREILLY HELPS -->` | Four platform pillars |
-| `<!-- ROLES -->` | Five 2026 priority hiring roles (accordion) |
-| `<!-- AI ANSWERS FEATURE -->` | O'Reilly Answers + sourced AI |
-| `<!-- MCP INTEGRATION SECTION -->` | MCP explainer + tool integrations |
-| `<!-- CTA -->` | Ready to Launch + Jason Reid contact |
+## 🎨 Branding & Features
 
-To update stats, copy, or role information, search for the relevant text in `index.html` and edit in place.
-
-## 🎨 Branding
-
-The site uses Sierra Space's design language:
 - **Colors:** Deep navy/black backgrounds, Sierra blue (`#2280f0`), O'Reilly red (`#d63c2e`), gold accent (`#f0a500`)
-- **Fonts:** Barlow Condensed (headings), Barlow (body), Share Tech Mono (code/labels) — all loaded via Google Fonts
+- **Fonts:** Barlow Condensed (headings), Barlow (body), Share Tech Mono (code/labels) — loaded via Google Fonts
+- **Animated satellite:** Two satellites in orbital arcs animate continuously across the full page background
+- **Learning plan:** Book cover images load from the O'Reilly CDN (`learning.oreilly.com/covers/urn:orm:...`) — requires a live `https://` host to render (GitHub Pages works perfectly)
 - **Style:** Dark aerospace aesthetic matching [sierraspace.com](https://www.sierraspace.com)
 
 ## 📬 Contact
 
-**Jason Reid** — Enterprise Account Executive, O'Reilly Media
+**Jason Reid** — Enterprise Account Executive, O'Reilly Media  
 jason.reid@oreilly.com
 
 ---

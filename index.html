@@ -27,6 +27,13 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  /* Ensure all page content text/UI is above satellite canvas (z:10) */
+  nav, footer, section > *, section > div, .roles-grid, .challenge-grid,
+  .how-helps-grid, .ai-feature-grid, .lp-grid, .pl-row, .pricing-grid,
+  .cta-section-content, .platform-callout {
+    position: relative; z-index: 15;
+  }
+
   html { scroll-behavior: smooth; }
 
   body {
@@ -102,7 +109,7 @@
     background-size: 60px 60px;
     mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
   }
-  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+  .hero-content { position: relative; z-index: 15; max-width: 900px; }
   .hero-eyebrow {
     display: flex; align-items: center; gap: 0.75rem;
     margin-bottom: 1.5rem;
@@ -662,6 +669,232 @@
 </head>
 <body>
 
+<!-- SATELLITE BACKGROUND ANIMATION -->
+<canvas id="sat-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10; opacity:1;"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('sat-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* ── Satellite body SVG-style drawn with canvas paths ── */
+  function drawSatellite(ctx, x, y, angle, scale) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.scale(scale, scale);
+
+    const bodyColor   = 'rgba(220,235,255,1.0)';
+    const panelColor  = 'rgba(34,128,240,1.0)';
+    const panelAccent = 'rgba(34,128,240,0.5)';
+    const metalColor  = 'rgba(210,228,255,0.95)';
+    const glowColor   = 'rgba(34,128,240,0.3)';
+
+    /* glow behind craft */
+    const grd = ctx.createRadialGradient(0, 0, 2, 0, 0, 22);
+    grd.addColorStop(0, 'rgba(34,128,240,0.18)');
+    grd.addColorStop(1, 'rgba(34,128,240,0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.arc(0, 0, 22, 0, Math.PI * 2);
+    ctx.fill();
+
+    /* main body */
+    ctx.fillStyle = bodyColor;
+    ctx.strokeStyle = metalColor;
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.roundRect(-7, -5, 14, 10, 2);
+    ctx.fill();
+    ctx.stroke();
+
+    /* body detail lines */
+    ctx.strokeStyle = 'rgba(100,150,220,0.5)';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(-3, -5); ctx.lineTo(-3, 5); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(3, -5); ctx.lineTo(3, 5); ctx.stroke();
+
+    /* solar panels — left wing */
+    ctx.fillStyle = panelColor;
+    ctx.strokeStyle = panelAccent;
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    ctx.roundRect(-28, -4, 19, 8, 1);
+    ctx.fill();
+    ctx.stroke();
+
+    /* solar panel grid lines left */
+    ctx.strokeStyle = 'rgba(34,128,240,0.4)';
+    ctx.lineWidth = 0.4;
+    for (let i = 1; i < 4; i++) {
+      ctx.beginPath(); ctx.moveTo(-28 + i*4.75, -4); ctx.lineTo(-28 + i*4.75, 4); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(-28, 0); ctx.lineTo(-9, 0); ctx.stroke();
+
+    /* solar panels — right wing */
+    ctx.fillStyle = panelColor;
+    ctx.strokeStyle = panelAccent;
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    ctx.roundRect(9, -4, 19, 8, 1);
+    ctx.fill();
+    ctx.stroke();
+
+    /* solar panel grid lines right */
+    ctx.strokeStyle = 'rgba(34,128,240,0.4)';
+    ctx.lineWidth = 0.4;
+    for (let i = 1; i < 4; i++) {
+      ctx.beginPath(); ctx.moveTo(9 + i*4.75, -4); ctx.lineTo(9 + i*4.75, 4); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(9, 0); ctx.lineTo(28, 0); ctx.stroke();
+
+    /* antenna boom */
+    ctx.strokeStyle = metalColor;
+    ctx.lineWidth = 0.7;
+    ctx.beginPath(); ctx.moveTo(0, -5); ctx.lineTo(0, -12); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, -12); ctx.lineTo(-4, -16); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, -12); ctx.lineTo(4, -16); ctx.stroke();
+
+    /* antenna dish */
+    ctx.strokeStyle = 'rgba(200,220,255,0.8)';
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.arc(-4, -16, 3, 0.3, Math.PI - 0.3);
+    ctx.stroke();
+
+    /* thruster nozzle */
+    ctx.fillStyle = 'rgba(160,190,240,0.7)';
+    ctx.beginPath();
+    ctx.moveTo(-3, 5); ctx.lineTo(3, 5); ctx.lineTo(2, 9); ctx.lineTo(-2, 9);
+    ctx.closePath(); ctx.fill();
+
+    /* thruster glow */
+    const thrustGrd = ctx.createLinearGradient(0, 9, 0, 18);
+    thrustGrd.addColorStop(0, 'rgba(100,180,255,0.5)');
+    thrustGrd.addColorStop(0.4, 'rgba(34,128,240,0.2)');
+    thrustGrd.addColorStop(1, 'rgba(34,128,240,0)');
+    ctx.fillStyle = thrustGrd;
+    ctx.beginPath();
+    ctx.moveTo(-2, 9); ctx.lineTo(2, 9);
+    ctx.bezierCurveTo(4, 14, 4, 18, 0, 20);
+    ctx.bezierCurveTo(-4, 18, -4, 14, -2, 9);
+    ctx.closePath(); ctx.fill();
+
+    ctx.restore();
+  }
+
+  /* ── Orbital arc parameters ── */
+  /* Two satellites on different arcs for depth */
+  const sats = [
+    {
+      /* wide arc across full page height */
+      cx: -0.15,   /* centre X as fraction of canvas width */
+      cy: 0.55,    /* centre Y as fraction of canvas height */
+      rx: 1.15,    /* x-radius fraction of canvas width */
+      ry: 0.38,    /* y-radius fraction of canvas height */
+      tilt: -0.18, /* rotation of ellipse in radians */
+      speed: 0.000095,
+      t: 0.0,
+      scale: 1.1,
+      opacity: 1.0,
+      trailLen: 260,
+    },
+    {
+      /* secondary tighter arc, offset in time */
+      cx: 1.12,
+      cy: 0.42,
+      rx: 1.08,
+      ry: 0.28,
+      tilt: 0.22,
+      speed: 0.000070,
+      t: 0.55,
+      scale: 0.75,
+      opacity: 0.75,
+      trailLen: 200,
+    }
+  ];
+
+  /* Trail history per satellite */
+  const trails = sats.map(() => []);
+
+  function getSatPos(sat, t, W, H) {
+    const cx = sat.cx * W;
+    const cy = sat.cy * H;
+    const rx = sat.rx * W;
+    const ry = sat.ry * H;
+    const angle = t * Math.PI * 2;
+    const ex = Math.cos(angle) * rx;
+    const ey = Math.sin(angle) * ry;
+    /* apply tilt rotation */
+    const cosT = Math.cos(sat.tilt);
+    const sinT = Math.sin(sat.tilt);
+    return {
+      x: cx + ex * cosT - ey * sinT,
+      y: cy + ex * sinT + ey * cosT,
+      /* heading angle for satellite orientation */
+      heading: Math.atan2(
+        Math.cos(angle) * ry * cosT + Math.sin(angle) * rx * sinT,
+        -Math.sin(angle) * rx * cosT + Math.cos(angle) * ry * sinT
+      )
+    };
+  }
+
+  let last = null;
+  function frame(ts) {
+    if (!last) last = ts;
+    const dt = ts - last;
+    last = ts;
+
+    const W = canvas.width;
+    const H = canvas.height;
+
+    ctx.clearRect(0, 0, W, H);
+
+    sats.forEach((sat, idx) => {
+      sat.t = (sat.t + sat.speed * dt) % 1;
+      const pos = getSatPos(sat, sat.t, W, H);
+
+      /* record trail */
+      trails[idx].push({ x: pos.x, y: pos.y });
+      const maxTrail = sat.trailLen;
+      if (trails[idx].length > maxTrail) trails[idx].shift();
+
+      ctx.save();
+      ctx.globalAlpha = sat.opacity;
+
+      /* draw trail */
+      if (trails[idx].length > 2) {
+        for (let i = 1; i < trails[idx].length; i++) {
+          const progress = i / trails[idx].length;
+          const alpha = progress * 0.7;
+          ctx.beginPath();
+          ctx.moveTo(trails[idx][i-1].x, trails[idx][i-1].y);
+          ctx.lineTo(trails[idx][i].x, trails[idx][i].y);
+          ctx.strokeStyle = `rgba(34,128,240,${alpha})`;
+          ctx.lineWidth = progress * 2.5;
+          ctx.stroke();
+        }
+      }
+
+      /* draw satellite */
+      drawSatellite(ctx, pos.x, pos.y, pos.heading + Math.PI / 2, sat.scale);
+
+      ctx.restore();
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logos">
@@ -675,7 +908,9 @@
     <a href="#challenges">Talent Challenges</a>
     <a href="#platform">Platform</a>
     <a href="#roles">Priority Roles</a>
+    <a href="#learning-plan">Learning Plan</a>
     <a href="#mcp">MCP Integration</a>
+    <a href="#pricing">Pricing</a>
     <a href="#contact" class="nav-cta">Get Started</a>
   </div>
 </nav>
@@ -998,6 +1233,319 @@
   </div>
 </section>
 
+<!-- LEARNING PLAN SECTION -->
+<section id="learning-plan" style="background: var(--navy); padding: 6rem 4rem; position:relative; overflow:hidden;">
+  <div style="position:absolute; inset:0; background: radial-gradient(ellipse at 60% 30%, rgba(34,128,240,0.06) 0%, transparent 60%);"></div>
+  <div style="position:relative; z-index:2;">
+
+    <div class="section-eyebrow">
+      <div class="section-eyebrow-line"></div>
+      <span>Role 01 &middot; Flight Software Engineer (GNC/Avionics)</span>
+    </div>
+    <h2 class="section-title">Interactive Sample<br>Learning Plan</h2>
+    <p class="section-lead" style="margin-bottom:0.75rem;">A curated playlist of books, on-demand courses, and live events to ramp a new Flight Software Engineer from day one &mdash; pointed directly at the stack that powers Dream Chaser.</p>
+    <a href="https://learning.oreilly.com" target="_blank" style="display:inline-flex; align-items:center; gap:0.4rem; font-family:'Barlow Condensed',sans-serif; font-size:0.82rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--sierra-blue-bright); text-decoration:none; margin-bottom:3rem;">View Full Playlist on O'Reilly &#x2197;</a>
+
+    <style>
+      /* ── Playlist rows ── */
+      .pl-row-label {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+        color: var(--gray); border-left: 3px solid var(--sierra-blue);
+        padding-left: 0.75rem; margin-bottom: 1.25rem; margin-top: 2.5rem;
+      }
+      .pl-row-label:first-of-type { margin-top: 0; }
+
+      .pl-row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+      }
+      @media (max-width: 900px)  { .pl-row { grid-template-columns: repeat(3, 1fr); } }
+      @media (max-width: 560px)  { .pl-row { grid-template-columns: repeat(2, 1fr); } }
+
+      /* ── Card ── */
+      .pl-card {
+        background: var(--navy-mid);
+        border: 1px solid var(--border);
+        display: flex; flex-direction: column;
+        overflow: hidden;
+        transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+        color: inherit;
+      }
+      .pl-card:hover {
+        border-color: var(--sierra-blue);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(34,128,240,0.18);
+      }
+
+      /* ── Cover image area ── */
+      .pl-cover {
+        width: 100%; aspect-ratio: 2/3;
+        overflow: hidden; flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center;
+        position: relative; background: #0a1020;
+      }
+      .pl-cover img {
+        width: 100%; height: 100%; object-fit: cover; display: block;
+        transition: transform 0.3s;
+      }
+      .pl-card:hover .pl-cover img { transform: scale(1.05); }
+
+      /* ── Live tile ── */
+      .pl-live-tile {
+        width: 100%; height: 100%;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 0.5rem;
+        padding: 1rem;
+        background: linear-gradient(160deg, #0a2018 0%, #0f3025 100%);
+      }
+      .pl-live-badge-big {
+        background: #34d399; color: #051510;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.75rem; font-weight: 800;
+        letter-spacing: 0.2em; text-transform: uppercase;
+        padding: 0.2rem 0.7rem; margin-bottom: 0.25rem;
+      }
+      .pl-live-title-preview {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.88rem; font-weight: 700;
+        color: var(--white); text-align: center;
+        line-height: 1.3;
+      }
+      .pl-live-date-preview {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.62rem; color: #34d399;
+        text-align: center; letter-spacing: 0.05em;
+      }
+
+      /* ── Video conference tile ── */
+      .pl-video-tile {
+        width: 100%; height: 100%;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 0.5rem;
+        padding: 1rem;
+        background: linear-gradient(160deg, #1a0c08 0%, #2e1508 100%);
+      }
+      .pl-video-badge-big {
+        background: #fb923c; color: #1a0800;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.75rem; font-weight: 800;
+        letter-spacing: 0.2em; text-transform: uppercase;
+        padding: 0.2rem 0.7rem; margin-bottom: 0.25rem;
+      }
+
+      /* ── Card body ── */
+      .pl-body {
+        padding: 0.65rem 0.75rem 0.8rem;
+        flex: 1; display: flex; flex-direction: column; gap: 0.2rem;
+      }
+      .pl-type-pill {
+        display: inline-block;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+        padding: 0.15rem 0.45rem; border: 1px solid;
+        width: fit-content; margin-bottom: 0.2rem;
+      }
+      .pl-pill-book   { color: #6eb5ff; border-color: rgba(110,181,255,0.35); background: rgba(110,181,255,0.07); }
+      .pl-pill-course { color: #a78bfa; border-color: rgba(167,139,250,0.35); background: rgba(167,139,250,0.07); }
+      .pl-pill-live   { color: #34d399; border-color: rgba(52,211,153,0.35);  background: rgba(52,211,153,0.07); }
+      .pl-pill-video  { color: #fb923c; border-color: rgba(251,146,60,0.35);  background: rgba(251,146,60,0.07); }
+
+      .pl-title {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.85rem; font-weight: 700;
+        color: var(--white); line-height: 1.2;
+      }
+      .pl-author { font-size: 0.68rem; color: var(--gray); margin-top: 0.1rem; }
+      .pl-date   { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: #34d399; margin-top: 0.15rem; }
+
+      .pl-read-btn {
+        display: inline-block; margin-top: auto; padding-top: 0.5rem;
+        font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem;
+        font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        color: var(--sierra-blue-bright); text-decoration: none;
+        transition: color 0.2s;
+      }
+      .pl-card:hover .pl-read-btn { color: #fff; }
+    </style>
+
+    <!-- ── ROW 1: Books ── -->
+    <div class="pl-row-label">Row 1 &mdash; Books &amp; Core References</div>
+    <div class="pl-row">
+
+      <a href="https://learning.oreilly.com/api/v1/continue/9781838826734/" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <img src="https://learning.oreilly.com/covers/urn:orm:book:9781838826734/400w/"
+               alt="Hands-On RTOS with Microcontrollers"
+               onerror="this.parentElement.style.background='#0a1020'; this.style.display='none';">
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-book">Book</span>
+          <div class="pl-title">Hands-On RTOS with Microcontrollers</div>
+          <div class="pl-author">Brian Amos</div>
+          <span class="pl-read-btn">Read &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://learning.oreilly.com/api/v1/continue/9780128015070/" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <img src="https://learning.oreilly.com/covers/urn:orm:book:9780128015070/400w/"
+               alt="Real-Time Embedded Systems"
+               onerror="this.parentElement.style.background='#0a1020'; this.style.display='none';">
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-book">Book</span>
+          <div class="pl-title">Real-Time Embedded Systems</div>
+          <div class="pl-author">Xiaocong Fan</div>
+          <span class="pl-read-btn">Read &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://learning.oreilly.com/api/v1/continue/9781439813683/" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <img src="https://learning.oreilly.com/covers/urn:orm:book:9781439813683/400w/"
+               alt="Developing Safety-Critical Software"
+               onerror="this.parentElement.style.background='#0a1020'; this.style.display='none';">
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-book">Book</span>
+          <div class="pl-title">Developing Safety-Critical Software</div>
+          <div class="pl-author">Leanna Rierson</div>
+          <span class="pl-read-btn">Read &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://learning.oreilly.com/api/v1/continue/9780124159174/" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <img src="https://learning.oreilly.com/covers/urn:orm:book:9780124159174/400w/"
+               alt="Software Engineering for Embedded Systems"
+               onerror="this.parentElement.style.background='#0a1020'; this.style.display='none';">
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-book">Book</span>
+          <div class="pl-title">Software Engineering for Embedded Systems</div>
+          <div class="pl-author">Robert Oshana</div>
+          <span class="pl-read-btn">Read &rarr;</span>
+        </div>
+      </a>
+
+    </div><!-- /row 1 -->
+
+    <!-- ── ROW 2: Courses & Live Events ── -->
+    <div class="pl-row-label">Row 2 &mdash; On-Demand Courses &amp; Live Training</div>
+    <div class="pl-row">
+
+      <a href="https://learning.oreilly.com/videos/-/9781788294256/continue" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <img src="https://learning.oreilly.com/covers/urn:orm:video:9781788294256/400w/"
+               alt="Mastering C++ Standard Library Features"
+               onerror="this.parentElement.style.background='#150d2e'; this.style.display='none';">
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-course">On-Demand</span>
+          <div class="pl-title">Mastering C++ Standard Library Features</div>
+          <div class="pl-author">Vittorio Romeo</div>
+          <span class="pl-read-btn">Watch &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://learning.oreilly.com/videos/-/9781800563148/continue" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <img src="https://learning.oreilly.com/covers/urn:orm:video:9781800563148/400w/"
+               alt="Embedded Systems OOP in C and C++"
+               onerror="this.parentElement.style.background='#150d2e'; this.style.display='none';">
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-course">On-Demand</span>
+          <div class="pl-title">Embedded Systems OOP in C and C++</div>
+          <div class="pl-author">Israel Gbati</div>
+          <span class="pl-read-btn">Watch &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://learning.oreilly.com/videos/-/9781492025832/continue" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <img src="https://learning.oreilly.com/covers/urn:orm:video:9781492025832/400w/"
+               alt="The AI Conference San Francisco 2018"
+               onerror="this.parentElement.style.background='#1a0c08'; this.style.display='none';">
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-video">Conference</span>
+          <div class="pl-title">The AI Conference &mdash; San Francisco 2018</div>
+          <div class="pl-author">O'Reilly Media, Inc.</div>
+          <span class="pl-read-btn">Watch &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://learning.oreilly.com/live-events/-/0642572013451/" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <div class="pl-live-tile">
+            <span class="pl-live-badge-big">Live</span>
+            <div class="pl-live-title-preview">C++ Design Patterns</div>
+            <div class="pl-live-date-preview">May 15 &bull; 9am &ndash; 1pm</div>
+          </div>
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-live">Live Course</span>
+          <div class="pl-title">C++ Design Patterns</div>
+          <div class="pl-author">Klaus Iglberger</div>
+          <div class="pl-date">May 15 &bull; 9am &ndash; 1pm</div>
+          <span class="pl-read-btn">Register &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://learning.oreilly.com/live-events/-/0790145045396/" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <div class="pl-live-tile">
+            <span class="pl-live-badge-big">Live</span>
+            <div class="pl-live-title-preview">Spring AI</div>
+            <div class="pl-live-date-preview">June 2 &bull; 7pm &ndash; Midnight</div>
+          </div>
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-live">Live Course</span>
+          <div class="pl-title">Spring AI</div>
+          <div class="pl-author">Ken Kousen</div>
+          <div class="pl-date">June 2 &bull; 7pm &ndash; Midnight</div>
+          <span class="pl-read-btn">Register &rarr;</span>
+        </div>
+      </a>
+
+      <a href="https://learning.oreilly.com/live-events/-/0642572001330/" target="_blank" class="pl-card">
+        <div class="pl-cover">
+          <div class="pl-live-tile">
+            <span class="pl-live-badge-big">Live</span>
+            <div class="pl-live-title-preview">Integrating AI in Java Projects</div>
+            <div class="pl-live-date-preview">May 26 &bull; 5pm &ndash; 9pm</div>
+          </div>
+        </div>
+        <div class="pl-body">
+          <span class="pl-type-pill pl-pill-live">Live Course</span>
+          <div class="pl-title">Integrating AI in Java Projects</div>
+          <div class="pl-author">Ken Kousen</div>
+          <div class="pl-date">May 26 &bull; 5pm &ndash; 9pm</div>
+          <span class="pl-read-btn">Register &rarr;</span>
+        </div>
+      </a>
+
+    </div><!-- /row 2 -->
+
+    <div style="margin-top:2.5rem; padding:1.5rem 2rem; background:rgba(34,128,240,0.07); border:1px solid rgba(34,128,240,0.2); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+      <div>
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--white); margin-bottom:0.25rem;">This Is Just One Role's Playlist</div>
+        <div style="font-size:0.85rem; color:var(--gray);">O'Reilly admins can build and share equivalent curated plans for every role across Dream Chaser, LIFE&trade;, and Orbital Reef programs.</div>
+      </div>
+      <a href="mailto:jason.reid@oreilly.com" class="btn-primary" style="white-space:nowrap;">Build Your Plan &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+</section>
+
 <hr class="divider">
 
 <!-- AI ANSWERS FEATURE -->
@@ -1152,6 +1700,140 @@
   </div>
 </section>
 
+<!-- PRICING SECTION -->
+<section id="pricing" style="background: var(--navy); padding: 6rem 4rem; position:relative; overflow:hidden;">
+  <div style="position:absolute; inset:0; background: radial-gradient(ellipse at 50% 100%, rgba(26,107,204,0.08) 0%, transparent 60%);"></div>
+  <div style="position:relative; z-index:2; max-width:1000px; margin:0 auto;">
+
+    <div class="section-eyebrow" style="justify-content:center;">
+      <div class="section-eyebrow-line"></div>
+      <span>Investment</span>
+    </div>
+    <h2 class="section-title" style="text-align:center; margin-bottom:0.75rem;">Simple, Scalable Pricing</h2>
+    <p style="text-align:center; color:var(--gray); font-size:1rem; max-width:560px; margin:0 auto 3.5rem; line-height:1.7;">Every plan includes full access to O'Reilly's entire learning platform — 97K+ assets, 2,000+ live events per year, interactive labs, AI-powered Answers, and MCP integration.</p>
+
+    <style>
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+      }
+      @media (max-width: 700px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+      .pricing-card {
+        background: var(--navy-mid);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--sierra-blue);
+        padding: 2.5rem 2rem;
+        display: flex; flex-direction: column;
+        align-items: center; text-align: center;
+        position: relative;
+        transition: background 0.25s, box-shadow 0.25s;
+      }
+      .pricing-card:hover {
+        background: #131a2e;
+        box-shadow: 0 8px 32px rgba(34,128,240,0.12);
+      }
+
+      .pricing-tier {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+        color: var(--gray); margin-bottom: 1.5rem;
+      }
+
+      .pricing-seats {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 4rem; font-weight: 800; line-height: 1;
+        color: var(--white); margin-bottom: 0.25rem;
+      }
+      .pricing-seats-label {
+        font-size: 0.75rem; color: var(--gray);
+        letter-spacing: 0.08em; text-transform: uppercase;
+      }
+
+      .pricing-divider {
+        width: 40px; height: 1px; background: var(--border);
+        margin: 1.5rem auto;
+      }
+
+      .pricing-users {
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.72rem; color: var(--gray);
+        margin-bottom: 1.5rem; line-height: 1.6;
+      }
+      .pricing-users strong { color: var(--white); display: block; font-size: 1.6rem;
+        font-family: 'Barlow Condensed', sans-serif; font-weight: 700; line-height: 1; margin-bottom: 0.15rem;
+      }
+
+      .pricing-price {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 2.4rem; font-weight: 700;
+        color: var(--white); line-height: 1; margin-bottom: 0.3rem;
+      }
+      .pricing-price .cents { font-size: 1.1rem; font-weight: 400; color: var(--gray-light); }
+      .pricing-per {
+        font-size: 0.72rem; color: var(--gray);
+        letter-spacing: 0.08em; text-transform: uppercase;
+        margin-bottom: 1.75rem;
+      }
+
+      .pricing-note {
+        text-align: center; font-size: 0.8rem; color: var(--gray);
+        margin-top: 2.5rem; line-height: 1.7;
+      }
+      .pricing-note a { color: var(--sierra-blue-bright); text-decoration: none; }
+      .pricing-note a:hover { text-decoration: underline; }
+    </style>
+
+    <div class="pricing-grid">
+
+      <!-- Tier 1 -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Starter</div>
+        <div class="pricing-seats">10</div>
+        <div class="pricing-seats-label">Paid Licenses</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-users">
+          <strong>20</strong>
+          Total Users Allowed
+        </div>
+        <div class="pricing-price">$4,990<span class="cents">.00</span></div>
+        <div class="pricing-per">per year</div>
+      </div>
+
+      <!-- Tier 2 -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Growth</div>
+        <div class="pricing-seats">25</div>
+        <div class="pricing-seats-label">Paid Licenses</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-users">
+          <strong>50</strong>
+          Total Users Allowed
+        </div>
+        <div class="pricing-price">$11,030<span class="cents">.63</span></div>
+        <div class="pricing-per">per year</div>
+      </div>
+
+      <!-- Tier 3 -->
+      <div class="pricing-card">
+        <div class="pricing-tier">Scale</div>
+        <div class="pricing-seats">50</div>
+        <div class="pricing-seats-label">Paid Licenses</div>
+        <div class="pricing-divider"></div>
+        <div class="pricing-users">
+          <strong>100</strong>
+          Total Users Allowed
+        </div>
+        <div class="pricing-price">$21,835<span class="cents">.80</span></div>
+        <div class="pricing-per">per year</div>
+      </div>
+
+    </div><!-- /pricing-grid -->
+
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <div class="cta-section-content">
@@ -1192,6 +1874,19 @@
 </footer>
 
 <script>
+  function filterLP(type) {
+    document.querySelectorAll('.lp-card').forEach(card => {
+      if (type === 'all' || card.dataset.type === type) {
+        card.classList.remove('lp-hidden');
+      } else {
+        card.classList.add('lp-hidden');
+      }
+    });
+    document.querySelectorAll('.lp-filter').forEach(btn => {
+      btn.classList.toggle('lp-active', btn.dataset.type === type);
+    });
+  }
+
   function toggleRole(header) {
     const card = header.parentElement;
     const toggle = header.querySelector('.role-toggle');
